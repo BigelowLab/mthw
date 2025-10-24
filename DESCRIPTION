@@ -1,0 +1,21 @@
+Package: mthw
+Type: Package
+Title: Marine Thermohaline Waves
+Version: 0.1.0
+Authors@R: 
+  person("Tupper", "Ben", email = "btupper@bigelow.org", role = c("aut", "cre"))
+Maintainer: Ben Tupper <btupper@bigelow.org>
+Description: Detecting and forecasting Marine Thermohaline Waves using Copernicus data in R programming language.
+URL: https://github.com/BigelowLab/mthw
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 4.2.0)
+Imports:
+  rlang,
+  andreas,
+  dplyr,
+  sf,
+  stars,
+  readr
+RoxygenNote: 7.3.2

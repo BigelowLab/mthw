@@ -1,0 +1,102 @@
+/**************************************************************** 
+Bigelow Laboratory: Override CSS formatting for R Shiny Websites
+
+To edit any individual elements, classes, or objects in an R Shiny Website, or to override the default
+CSS styles specified by R shiny or the bigelowshinytheme package, write your override commands in this file. 
+
+To apply changes to your shiny site, add 'includeCSS("additionalStyles.css")' at the beginning of your UI object.
+
+ui <- fluidPage(
+  theme = bigelowshinytheme::bigelow_theme(), 
+  includeCSS("www/additionalStyles.css"),
+  ...
+)
+
+See below for further information about how to work with CSS to style elements.
+
+********************
+
+CSS is a formatting language for styling HTML websites. The structure of an R Shiny website allows for 
+styling to be manipulated using CSS formatting. 
+
+In general, CSS consists of specifying an element (by its type, class, role, or unique ID) and then specifying 
+name-value pairs of styling characteristics. An HTML element has 1 type, can have a unique ID,
+and can have any number of classes.
+
+div.myClass {
+  background-color: red;
+  font-size: 18px;
+  width: 25%;
+}
+
+R Shiny also uses Bootstrap, a CSS library which pre-styles many HTML elements and provides pre-built classes. We can 
+override or add additional rules to Bootstrap styling commands to further customize our website.
+
+Further learning resources to understand CSS: 
+
+[W3Schools CSS Tutorials](https://www.w3schools.com/Css/)
+[Bootstrap Documentation](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+[A Guide to Flexbox formatting](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+[CSS Specificity: How to override styles](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascade/Specificity)
+
+Right clicking + "Inspect" on most browsers will allow you to interactively explore and manipulate CSS
+styling & organisation of webpages. 
+
+*********************************
+
+Class and ID can be specified for Shiny elements as named arguments to functions. For example, say you would like
+to have a set of block items, where the background color of each item is bigelow green (defined as --tertiary in Root).
+
+R Shiny Construction: 
+
+ui <- fluidPage(
+  div(class = "green-block", p("Hello world!")),
+  div(class = "green-block", p("More content")),
+  div(class = "green-block", p("Even more content"))
+)
+
+CSS: 
+
+div.green-block {
+  background-color: var(--tertiary);
+  display: block;
+}
+
+If styling has already been specified for an element, any styles specified here will generally take priority (it is a local file!).
+
+For example, bigelow_theme() specifies that all headers are bold and Bigelow blue: 
+
+h1, h2, h3, h4, h5, h6, .navbar-header {
+ font-weight: bold;
+ color: var(--primary);
+}
+
+To override that for a specific header, include the replacement style in this file. You can use !important to force priority if needed.
+
+h5, h6 {
+  font-weight: normal;
+  color: red !important;
+}
+
+As CSS styles stack on top of each other, you have access to all variables defined by bigelow_theme(). Access a variable by using var(--variable-name).
+
+:root {
+  --bg: white;
+  --bg-accent: #EAF2F6; [light blue]
+  --fg: #444; [dark grey]
+  --fg-light: #CCC; [light grey]
+  --primary: #02A5DD; [bigelow sky blue]
+  --secondary: #1E4E7B; [bigelow dark blue]
+  --tertiary: #81AB1F; [bigelow green]
+  --danger: #D83838; [red]
+  --danger-accent: #901515; [dark red]
+  --font-size: 17px;
+  --line-height: 28px;
+  --nav-weight: 600; [font-weight for navigation tabs]
+  --border-thickness: 2px;
+}
+
+*****************************************************************/
+
+body {
+}
