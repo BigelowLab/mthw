@@ -4,7 +4,7 @@
 \alias{plot.mwd}
 \title{Plot a set of 'mwd' rasters}
 \usage{
-\method{plot}{mwd}(x = encode_wave(), y = NULL, show.legend = has_time(x), title = "", ...)
+\method{plot}{mwd}(x = encode_wave(), y = NULL, show.legend = TRUE, title = "", ...)
 }
 \arguments{
 \item{x}{stars 'mwd' raster ala `encode_wave`}

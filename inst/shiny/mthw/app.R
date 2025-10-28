@@ -36,17 +36,19 @@ tempd = mthw::encode_wave(temp)
 sald = mthw::encode_wave(sal) 
 
 DATES <- tempd |> stars::st_get_dimension_values("time")
-DATE = dates[6]
+DATE = DATES[6]
 
 get_slices = function(date = DATE, dates = DATES){
   ix = which(dates %in% date)
   list(
-    temp = dplyr::slice(tempd, "time", ix),
-    sal = dplyr::slice(sald, "time", ix),
+    temp = slice_date(tempd, ix),
+    sal = slice_date(sald,  ix),
     date = date
   )
 }
 
+uri = a("Hobday et al (2016)", 
+        href="https://www.sciencedirect.com/science/article/abs/pii/S0079661116000057")
 
 
 ##### UI ######
@@ -63,18 +65,17 @@ ui <- shiny::fluidPage(
   # Main content
   bigelowshinytheme::bigelow_main_body(
     # Introduction
-    p("Marine Thermohaline Waves are define by 5 or more consecutive days to metrics above the 90th or below the 10th quantiles of a 30-year baseline."),
-    p("Marine Waves definition follows Hobday et al (2016) https://www.sciencedirect.com/science/article/abs/pii/S0079661116000057" ),
+    p("Marine Thermohaline Waves are define by 5 or more consecutive days to metrics above the 90th or below the 10th percentiles of a 30-year baseline. Marine Waves definition follows", uri, "."),
     br(),
 
-    bigelow_card(headerContent = "Temperature and Salinity", 
+    bigelow_card(headerContent = "Sea Surface Temperature and Salinity", 
                  footerContent = NULL, 
                  sliderInput("dateSlider",
                              label = "Date",
                              min = min(DATES), max = max(DATES),
                              value = DATE),
                  plotOutput("plotOutput")) ,
-    bigelow_footer("Footer")
+    bigelow_footer("Data courtesy of Copernicus Marine Data Store")
   )
 )
 

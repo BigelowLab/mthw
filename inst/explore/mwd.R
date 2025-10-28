@@ -6,8 +6,9 @@ suppressPackageStartupMessages({
   library(leaflet)
   library(leafem)
   library(terra)
+  library(rnaturalearth)
+  library(ggplot2)
 })
-
 
 region = 'chfc'
 depths = "sur"
@@ -48,10 +49,18 @@ p = tribble(
 tempd = mthw::encode_wave(tempe) 
 sald = mthw::encode_wave(sale) 
 
+coast = rnaturalearth::ne_coastline(returnclass = "sf") |>
+  st_geometry() |>
+  st_crop(tempd)
+
+
 
 if (FALSE){
+  dat = slice(tempd,"time", 1) 
   leaflet() |>
     addTiles() |>
-    addStarsImage(slice(tempd,"time", 1)) |>
+    addStarsImage(dat, project = TRUE, method = "near") |>
+    addPolylines(data = coast) |>
     addMouseCoordinates()
 }
+

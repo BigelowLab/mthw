@@ -5,13 +5,13 @@
 #' @param sal stars object with "mwd" - say for sal
 plot_mwd_paired = function(temp, sal, title = "Temperature and Salinity"){
   if (has_time(temp)){
-    temp = dplyr::slice(temp, "time", 1)
+    temp = slice_date(temp, 1)
   }
   if (has_time(sal)){
-    sal = dplyr::slice(sal, "time", 1)
+    sal = slice_date(sal, 1)
   }
-  px = plot_mwd(temp, show.legend = FALSE, title = "Temperature")
-  py = plot_mwd(sal, title = "Salinty")
+  px = plot(temp, show.legend = FALSE, title = "Temperature")
+  py = plot(sal, title = "Salinty")
   px + py
 }
 
@@ -69,21 +69,15 @@ plot.mwd = function(x = encode_wave(), y = NULL,
 
 #' Retrieve a standard mwd (duration) color scheme
 #' 
-#' @return ggplot2::scale_fill_stepsn object
-colors_mwd = function(breaks = c(-15, -10, -5, 0, 5, 10, 15),
-                      values = scales::rescale(breaks),
-                      labels = c("15", "10", "5", "0", "5", "10", "15"),
-                      colors = rev(c('#b2182b',
+#' @return ggplot2::scale_fill_binned object
+colors_mwd = function(colors = rev(c('#b2182b',
                                      '#ef8a62',
                                      '#ffffff',
                                      '#ffffff',
                                      '#67a9cf',
                                      '#2166ac'))){
-  ggplot2::scale_fill_stepsn(
-    breaks = breaks,
-    labels = labels,
-    values =  values,
-    colours = colors)
+  ggplot2::scale_fill_binned(
+     palette = colors)
 }
 
 

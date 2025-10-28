@@ -5,14 +5,11 @@
 \title{Retrieve a standard mwd (duration) color scheme}
 \usage{
 colors_mwd(
-  breaks = c(-15, -10, -5, 0, 5, 10, 15),
-  values = scales::rescale(breaks),
-  labels = c("15", "10", "5", "0", "5", "10", "15"),
   colors = rev(c("#b2182b", "#ef8a62", "#ffffff", "#ffffff", "#67a9cf", "#2166ac"))
 )
 }
 \value{
-ggplot2::scale_fill_stepsn object
+ggplot2::scale_fill_binned object
 }
 \description{
 Retrieve a standard mwd (duration) color scheme
