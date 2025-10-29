@@ -81,6 +81,8 @@ if(FALSE){
                depth == key$depth)
 }
 
+# Here we perform the computations and saving the package data
+# the function looks outside of its own scope for variables - lazy, I know!
 main = function(){
  MWDB |>
   dplyr::group_by(region, name, depth) |>
@@ -108,7 +110,8 @@ main = function(){
   return(0)
 }
 
-
+# Here we make and save graphics (just for the date)
+# the function looks outside of its own scope for variables - lazy, I know!
 graphics = function() { 
   for (reg in Args$region){
     filename = mthw_filename(region = reg, 
@@ -137,6 +140,8 @@ graphics = function() {
   return(0)
 }
 
+# Here rebuild and install the package then push
+# the function looks outside of its own scope for variables - lazy, I know!
 git = function(){
   devtools::document(Args$path)
   devtools::install(Args$path, upgrade = FALSE)
@@ -154,6 +159,7 @@ git = function(){
   # now push
   ok = system("git push origin main")
   setwd(orig)
+  return(0)
 }
 
 if (!interactive()){
