@@ -13,12 +13,7 @@ of heat waves. [Huang et al
 (2024)](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024GL108369)
 deployed a similar framework for study of recent conditions.
 
-<figure>
-<img src="inst/exdata/chfc_mwd_sur.png"
-alt="Daily snapshot of Marine Thermohaline Waves" />
-<figcaption aria-hidden="true">Daily snapshot of Marine Thermohaline
-Waves</figcaption>
-</figure>
+![](inst/exdata/chfc_mwd_sur.png)
 
 Here we replicate Hobday’s first framework using [Copernicus Global
 Ocean Physics Reanalysis
