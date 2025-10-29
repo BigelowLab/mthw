@@ -22,7 +22,8 @@ DB = mthw::read_database(file.path(mwpath, region)) |>
 CDB = andreas::read_database(andpath, multi = TRUE) |>
   dplyr::filter(.data$depth %in% depths, 
                 .data$name %in% c("temp", "sal"), 
-                .data$period == "day")
+                .data$period == "day") |>
+  dplyr::ungroup()
 
 
 tempe = mthw::generate_wave(

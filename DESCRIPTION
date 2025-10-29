@@ -17,5 +17,6 @@ Imports:
   dplyr,
   sf,
   stars,
+  patchwork,
   readr
 RoxygenNote: 7.3.2

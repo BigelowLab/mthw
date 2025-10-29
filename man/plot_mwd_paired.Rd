@@ -4,7 +4,7 @@
 \alias{plot_mwd_paired}
 \title{Plot a paired wave even or duration for a single day}
 \usage{
-plot_mwd_paired(temp, sal, title = "Temperature and Salinity")
+plot_mwd_paired(temp, sal, title = "Marine Thermohaline Waves")
 }
 \arguments{
 \item{temp}{stars object with "mwd" - perhaps temp}

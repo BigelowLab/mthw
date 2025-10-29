@@ -139,7 +139,7 @@ encode_wave = function(x = generate_mtw(),
 slice_date = function(x, date){
   k = class(x)[1]
   if (inherits(date, "Date")){
-    dates = stars::st_get_dimension_values("time")
+    dates = stars::st_get_dimension_values(x, "time")
     ix = which(dates %in% date)
     r = dplyr::slice(x, "time", ix) |>
       add_class(k)

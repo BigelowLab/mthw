@@ -3,7 +3,8 @@
 #' @export
 #' @param temp stars object with "mwd" - perhaps temp
 #' @param sal stars object with "mwd" - say for sal
-plot_mwd_paired = function(temp, sal, title = "Temperature and Salinity"){
+plot_mwd_paired = function(temp, sal, 
+                           title = "Marine Thermohaline Waves"){
   if (has_time(temp)){
     temp = slice_date(temp, 1)
   }
@@ -12,7 +13,9 @@ plot_mwd_paired = function(temp, sal, title = "Temperature and Salinity"){
   }
   px = plot(temp, show.legend = FALSE, title = "Temperature")
   py = plot(sal, title = "Salinty")
-  px + py
+  patchwork::wrap_plots(px, py, ncol = 2) + 
+    patchwork::plot_annotation(title = title,
+                               caption = "Data sourced from Copernicus")
 }
 
 #' Generate breaks for the display of encoded wave data
