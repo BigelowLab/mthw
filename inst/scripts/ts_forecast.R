@@ -125,7 +125,7 @@ graphics = function() {
       slice_date(Args$date)
     gg = plot_mwd_paired(tempd, sald,
                          title = sprintf("Marine Thermohaline Waves, %s",
-                                         format(Args$date, "%y-%m-%d")))
+                                         format(Args$date, "%Y-%m-%d")))
     filename = mthw_filename(region = reg, 
                              variable = "mwd",
                              depth = "sur",
