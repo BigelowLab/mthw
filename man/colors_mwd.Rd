@@ -5,8 +5,15 @@
 \title{Retrieve a standard mwd (duration) color scheme}
 \usage{
 colors_mwd(
-  colors = rev(c("#b2182b", "#ef8a62", "#ffffff", "#ffffff", "#67a9cf", "#2166ac"))
+  colors = rev(c("#b2182b", "#ef8a62", "#ffffff", "#ffffff", "#67a9cf", "#2166ac")),
+  breaks = NULL,
+  labels = NULL
 )
+}
+\arguments{
+\item{colors}{chr, color palette}
+
+\item{labels}{chr, labels (length must be one more than colors)}
 }
 \value{
 ggplot2::scale_fill_binned object

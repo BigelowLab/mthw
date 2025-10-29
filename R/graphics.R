@@ -72,15 +72,19 @@ plot.mwd = function(x = encode_wave(), y = NULL,
 
 #' Retrieve a standard mwd (duration) color scheme
 #' 
+#' @param colors chr, color palette
+#' @param labels chr, labels (length must be one more than colors)
 #' @return ggplot2::scale_fill_binned object
 colors_mwd = function(colors = rev(c('#b2182b',
                                      '#ef8a62',
                                      '#ffffff',
                                      '#ffffff',
                                      '#67a9cf',
-                                     '#2166ac'))){
+                                     '#2166ac')),
+                      breaks = NULL, #c(-15, -10, -5,  5, 10, 15),
+                      labels = NULL){ # c("15", "10", "5", "5", "10", "15")){
   ggplot2::scale_fill_binned(
-     palette = colors)
+    palette = colors)
 }
 
 

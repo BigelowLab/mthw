@@ -1,48 +1,32 @@
 suppressPackageStartupMessages({
-  library(andreas)
-  library(mthw)
   library(stars)
+  library(mthw)
   library(shiny)
   library(bslib)
   library(bigelowshinytheme)
   library(dplyr)
-  library(leaflet)
-  library(ggplot2)
-  library(patchwork)
 })
 
 region = 'chfc'
 depths = "sur"
 vars = c("temp", "sal")
-andpath = andreas::copernicus_path(region)
-mwpath = andreas::copernicus_path("mthw")
-
-db = mthw::read_database(file.path(mwpath, region)) |>
-  dplyr::filter(.data$depth %in% depths, 
-                .data$name %in% vars)
-cDB = andreas::read_database(andpath, multi = TRUE) |>
-  dplyr::filter(.data$depth %in% depths, 
-                .data$name %in% c("temp", "sal"), 
-                .data$period == "day")
-temp = mthw::generate_wave(
-  db = db |> dplyr::filter(name == "temp"),
-  region = region,
-  cDB = cDB)
-sal = mthw::generate_wave(
-  db = db |> dplyr::filter(name == "sal"),
-  region = region,
-  cDB = cDB)
-tempd = mthw::encode_wave(temp) 
-sald = mthw::encode_wave(sal) 
-
+path = system.file(package = "mthw")
+tempd = mthw::read_raster(filename = mthw_filename(region = region,
+                                                   depth = depths[1],
+                                                   variable = "temp",
+                                                   path = path))
+sald = mthw::read_raster(filename = mthw_filename(region = region,
+                                                   depth = depths[1],
+                                                   variable = "sal",
+                                                   path = path))
 DATES <- tempd |> stars::st_get_dimension_values("time")
 DATE = DATES[6]
 
 get_slices = function(date = DATE, dates = DATES){
   ix = which(dates %in% date)
   list(
-    temp = slice_date(tempd, ix),
-    sal = slice_date(sald,  ix),
+    temp = mthw::slice_date(tempd, ix),
+    sal = mthw::slice_date(sald,  ix),
     date = date
   )
 }
@@ -68,24 +52,25 @@ ui <- shiny::fluidPage(
     p("Marine Thermohaline Waves are define by 5 or more consecutive days to metrics above the 90th or below the 10th percentiles of a 30-year baseline. Marine Waves definition follows", uri, "."),
     br(),
 
-    bigelow_card(headerContent = "Sea Surface Temperature and Salinity", 
-                 footerContent = NULL, 
-                 sliderInput("dateSlider",
-                             label = "Date",
-                             min = min(DATES), max = max(DATES),
-                             value = DATE),
-                 plotOutput("plotOutput")) ,
-    bigelow_footer("Data courtesy of Copernicus Marine Data Store")
+    bigelowshinytheme::bigelow_card(
+      headerContent = "Sea Surface Temperature and Salinity", 
+      footerContent = NULL, 
+      sliderInput("dateSlider",
+                  label = "Date",
+                  min = min(DATES), max = max(DATES),
+                  value = DATE),
+      plotOutput("plotOutput")) ,
+    bigelowshinytheme::bigelow_footer("Data courtesy of Copernicus Marine Data Store")
   )
 )
 
 server <- function(input, output, session) {
   
-  
-  
   output$plotOutput <- renderPlot({
     x = get_slices(input$dateSlider)
-    plot_mwd_paired(x$temp, x$sal)
+    mthw::plot_mwd_paired(x$temp, x$sal,
+                          title = sprintf("Marine Thermohaline Waves %s",
+                                          format(x$date, "%Y-%m-%d")))
   })
   
 }
