@@ -13,7 +13,7 @@ of heat waves. [Huang et al
 (2024)](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024GL108369)
 deployed a similar framework for study of recent conditions.
 
-![](inst/exdata/chfc_mwd_sur.png)
+![](inst/exdata/chfc_mwd_sur-bot.png)
 
 Here we replicate Hobday’s first framework using [Copernicus Global
 Ocean Physics Reanalysis
