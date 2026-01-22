@@ -7,7 +7,7 @@
 plot_mwd_list(x, title = "Marine Thermohaline Waves")
 }
 \arguments{
-\item{x}{named list of stars stars objects with "mwd"}
+\item{x}{named list of stars stars objects with "mwd/stars" inheritance}
 
 \item{title}{str, the title for the plot}
 }

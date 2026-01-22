@@ -118,20 +118,28 @@ graphics = function() {
                              variable = "temp",
                              depth = "sur",
                              path = OUTPATH)
-    tempd = read_raster(filename) |>
+    sstd = read_raster(filename) |>
       slice_date(Args$date)
     filename = mthw_filename(region = reg, 
                              variable = "sal",
                              depth = "sur",
                              path = OUTPATH)
-    sald = read_raster(filename) |>
+    sssd = read_raster(filename) |>
       slice_date(Args$date)
-    gg = plot_mwd_paired(tempd, sald,
+    filename = mthw_filename(region = reg, 
+                             variable = "temp",
+                             depth = "bot",
+                             path = OUTPATH)
+    sbtd = read_raster(filename) |>
+      slice_date(Args$date)
+    
+    
+    gg = plot_mwd_list(list(sst = sstd, sss = sssd, sbt = sbtd), # tempd, sald,
                          title = sprintf("Marine Thermohaline Waves, %s",
                                          format(Args$date, "%Y-%m-%d")))
     filename = mthw_filename(region = reg, 
                              variable = "mwd",
-                             depth = "sur",
+                             depth = "sur-bot",
                              extension = ".png",
                              path = OUTPATH)
     charlier::info("writing graphics %s", filename)

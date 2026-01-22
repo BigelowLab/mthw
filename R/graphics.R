@@ -22,13 +22,13 @@ plot_mwd_paired = function(temp, sal,
 #' Plot a paired wave event or duration for a single day
 #' 
 #' @export
-#' @param x named list of stars stars objects with "mwd"
+#' @param x named list of stars stars objects with "mwd/stars" inheritance
 #' @param title str, the title for the plot
 plot_mwd_list = function(x, 
                          title = "Marine Thermohaline Waves"){
   
-  nms = names(x)
-  if ("date" %in% nms) nms = nms[nms != "date"]
+  klass = sapply(x, inherits, "stars")
+  nms = names(x)[klass]
   n = length(nms)
   last_name = nms[n]
   

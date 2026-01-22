@@ -73,9 +73,9 @@ server <- function(input, output, session) {
   
   output$plotOutput <- renderPlot({
     x = get_slices(input$dateSlider)
-    mthw::plot_mwd_paired(x$sst, x$sss,
-                          title = sprintf("Marine Thermohaline Waves %s",
-                                          format(x$date, "%Y-%m-%d")))
+    mthw::plot_mwd_list(x,
+                        title = sprintf("Marine Thermohaline Waves %s",
+                                        format(x$date, "%Y-%m-%d")))
   })
   
 }
