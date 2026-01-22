@@ -1,4 +1,4 @@
-#' Plot a paired wave even or duration for a single day
+#' Plot a paired wave event or duration for a single day
 #' 
 #' @export
 #' @param temp stars object with "mwd" - perhaps temp
@@ -17,6 +17,37 @@ plot_mwd_paired = function(temp, sal,
     patchwork::plot_annotation(title = title,
                                caption = "Data sourced from Copernicus")
 }
+
+
+#' Plot a paired wave event or duration for a single day
+#' 
+#' @export
+#' @param x named list of stars stars objects with "mwd"
+#' @param title str, the title for the plot
+plot_mwd_list = function(x, 
+                         title = "Marine Thermohaline Waves"){
+  
+  nms = names(x)
+  if ("date" %in% nms) nms = nms[nms != "date"]
+  n = length(nms)
+  last_name = nms[n]
+  
+  pp = lapply(nms,
+              function(nm) {
+                tmp = slice_date(x[[nm]],1)
+                gg = plot(tmp,
+                          show.legend = (nm == last_name),
+                          title = toupper(nm))
+                return(gg)
+              } ) |>
+    rlang::set_names(nms)
+  
+ 
+  patchwork::wrap_plots(pp, ncol = n) + 
+    patchwork::plot_annotation(title = title,
+                               caption = "Data sourced from Copernicus")
+}
+
 
 #' Generate breaks for the display of encoded wave data
 #' @export

@@ -11,22 +11,27 @@ region = 'chfc'
 depths = "sur"
 vars = c("temp", "sal")
 path = system.file(package = "mthw")
-tempd = mthw::read_raster(filename = mthw_filename(region = region,
+sstd = mthw::read_raster(filename = mthw_filename(region = region,
                                                    depth = depths[1],
                                                    variable = "temp",
                                                    path = path))
-sald = mthw::read_raster(filename = mthw_filename(region = region,
+sssd = mthw::read_raster(filename = mthw_filename(region = region,
                                                    depth = depths[1],
                                                    variable = "sal",
                                                    path = path))
-DATES <- tempd |> stars::st_get_dimension_values("time")
+sbtd = mthw::read_raster(filename = mthw_filename(region = region,
+                                                  depth = "bot",
+                                                  variable = "temp",
+                                                  path = path))
+DATES <- sstd |> stars::st_get_dimension_values("time")
 DATE = DATES[6]
 
 get_slices = function(date = DATE, dates = DATES){
   ix = which(dates %in% date)
   list(
-    temp = mthw::slice_date(tempd, ix),
-    sal = mthw::slice_date(sald,  ix),
+    sst = mthw::slice_date(sstd, ix),
+    sss = mthw::slice_date(sssd,  ix),
+    sbt = mthw::slice_date(sbtd,  ix),
     date = date
   )
 }
@@ -53,7 +58,7 @@ ui <- shiny::fluidPage(
     br(),
 
     bigelowshinytheme::bigelow_card(
-      headerContent = "Sea Surface Temperature and Salinity", 
+      headerContent = "Temperature and Salinity", 
       footerContent = NULL, 
       sliderInput("dateSlider",
                   label = "Date",
@@ -68,7 +73,7 @@ server <- function(input, output, session) {
   
   output$plotOutput <- renderPlot({
     x = get_slices(input$dateSlider)
-    mthw::plot_mwd_paired(x$temp, x$sal,
+    mthw::plot_mwd_paired(x$sst, x$sss,
                           title = sprintf("Marine Thermohaline Waves %s",
                                           format(x$date, "%Y-%m-%d")))
   })

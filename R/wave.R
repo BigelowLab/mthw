@@ -137,6 +137,8 @@ encode_wave = function(x = generate_mtw(),
 #' @param date numeric or Date identifying the slabs of time to slice
 #' @param the input sliced and with its original class label
 slice_date = function(x, date){
+  dm = dim(x)
+  if (length(dm) < 3) return(x)
   k = class(x)[1]
   if (inherits(date, "Date")){
     dates = stars::st_get_dimension_values(x, "time")
