@@ -28,7 +28,8 @@ generate_wave = function(db = read_database() |>
     dplyr::mutate(doy = format(.data$date, "%j")) |>
     dplyr::filter(.data$name %in% db$name, 
                   .data$depth %in% db$depth,
-                  .data$date %in% dates)
+                  .data$date %in% dates) |>
+    dplyr::mutate(doy = format(.data$date, "%j"))
     
   ss = cDB |>
     dplyr::rowwise() |>
