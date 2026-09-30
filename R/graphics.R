@@ -11,9 +11,9 @@ plot_mwd_paired = function(temp, sal,
   if (has_time(sal)){
     sal = slice_date(sal, 1)
   }
-  px = plot(temp, show.legend = FALSE, title = "Temperature")
-  py = plot(sal, title = "Salinty")
-  patchwork::wrap_plots(px, py, ncol = 2) + 
+  px = plot_mwd(temp, show.legend = FALSE, title = "Temperature")
+  py = plot_mwd(sal, title = "Salinty")
+  patchwork::wrap_plots(list(px, py), ncol = 2) + 
     patchwork::plot_annotation(title = title,
                                caption = "Data sourced from Copernicus")
 }
@@ -35,7 +35,7 @@ plot_mwd_list = function(x,
   pp = lapply(nms,
               function(nm) {
                 tmp = slice_date(x[[nm]],1)
-                gg = plot(tmp,
+                gg = plot_mwd(tmp,
                           show.legend = (nm == last_name),
                           title = toupper(nm))
                 return(gg)
@@ -69,7 +69,7 @@ mwd_breaks = function(x = encode_wave(),
 #' @param show.legend logical, shown if TRUE
 #' @param ... arguments for facet_wrap
 #' @return ggplot2 object 
-plot.mwd = function(x = encode_wave(), y = NULL, 
+plot_mwd = function(x = encode_wave(), y = NULL, 
                     show.legend = TRUE, 
                     title = "", 
                     ...){
@@ -126,7 +126,7 @@ colors_mwd = function(colors = rev(c('#b2182b',
 #' @param show.legend logical, shown if TRUE
 #' @param ncol NULL or numeric number of columns
 #' @return ggplot2 object 
-plot.mwe = function(x = generate_wave(), y = NULL, 
+plot_mwe = function(x = generate_wave(), y = NULL, 
                     show.legend = has_time(x),
                     title = "",
                     ...){
