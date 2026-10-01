@@ -17,6 +17,13 @@ sal = generate_wave(
   dates = as.Date( c("2026-09-01", "2026-09-30")) )
 sald = mthw::encode_wave(sal)
 
+btemp = generate_wave(
+  db = read_database() |> 
+    dplyr::filter(name == "temp", depth == "bot"),
+  dates = as.Date( c("2026-09-01", "2026-09-30")) )
+btempd = mthw::encode_wave(btemp)
+
+
 
 dates = stars::st_get_dimension_values(tempd, 3)
 
@@ -34,3 +41,17 @@ gg = lapply(seq_along(dates),
     ggplot2::ggsave(ofile, plot = g, width = 11, height = 8.5)
   g
 })
+
+gg = lapply(seq_along(dates),
+            function (i) {
+              cat(i, dates[i], "\n")
+              g = plot_mwd(dplyr::slice(btempd, "time", i),
+                  title = sprintf("Marine Thermohaline Waves %s",
+                                   format(dates[i], "%Y-%m-%d")))
+              ofile = file.path("/mnt/ecocast/corecode/R/mthw/inst/explore/nrecord",
+                                sprintf("mthw_event_bottomT_%s.png", format(dates[i], "%Y-%m-%d")))
+              cat("  ", ofile, "\n")
+              ggplot2::ggsave(ofile, plot = g, width = 11, height = 8.5)
+              g
+            })
+
