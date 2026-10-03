@@ -75,7 +75,7 @@ generate_wave = function(db = read_database() |>
 #'   try to merge the events
 #' @param mask logical, if TRUE, then mask the result so only events of 
 #'   event_window days are returned.  Shorter events are set to 0.
-#' @return stars object with records of thermal waves duration (hence "mwd" attribue name).
+#' @return stars object with records of thermal waves duration (hence "mwd" attribute name).
 encode_wave = function(x = generate_mtw(), 
                        event_window = 5, 
                        gap_width = 2,

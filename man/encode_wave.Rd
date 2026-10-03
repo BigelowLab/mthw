@@ -18,7 +18,7 @@ try to merge the events}
 event_window days are returned.  Shorter events are set to 0.}
 }
 \value{
-stars object with records of thermal waves duration (hence "mwd" attribue name).
+stars object with records of thermal waves duration (hence "mwd" attribute name).
 }
 \description{
 Given marine wave event data, compute duration of waves
